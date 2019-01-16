@@ -1,0 +1,19 @@
+{
+  "name": "sudocu-brutforce",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node -r esm src/index.js",
+    "perftest": "NODE_ENV=production node -r esm perftest.js",
+    "test": "mocha './tests/*.test.js' -r esm"
+  },
+  "keywords": [],
+  "author": "“Enity” <“enity.w@gmail.com”>",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "esm": "^3.1.0",
+    "mocha": "^5.2.0"
+  }
+}
