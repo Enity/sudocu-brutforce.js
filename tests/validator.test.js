@@ -1,8 +1,9 @@
 import { strictEqual as equal } from 'assert';
 import { Validator } from '../src/validator';
 import { Sudocu } from '../src/sudocu';
+import { brut } from '../src/brutforce';
 
-describe('Sudocu class tests', () => {
+describe('Validator class tests', () => {
     describe('validateArray method', () => {
         it('should return true if all digits is unique', () => {
             equal(Validator.validateArray([1, 2, 3, 4, 5, 6, 7, 8, 9]), true);
@@ -38,5 +39,13 @@ describe('Sudocu class tests', () => {
             const res = Validator.validateSudocu(new Sudocu());
             equal(res, true);
         });
+    });
+});
+
+describe('Bruforce tests', () => {
+    it('should return a pseudo-valid sudocu', () => { // TODO
+        const sudocu = brut();
+        const res = Validator.validateSudocu(sudocu);
+        equal(res, true);
     });
 });
