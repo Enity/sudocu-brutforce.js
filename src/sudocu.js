@@ -34,9 +34,8 @@ export class Sudocu {
         }
     }
 
-    getField(x, y) {
+    getFieldPos(x, y) {
         return {
-            value: this.map[y][x],
             row: this.map[y],
             col: undefined, // TODO
             square: undefined // TODO

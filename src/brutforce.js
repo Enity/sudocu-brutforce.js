@@ -9,8 +9,8 @@ export function brut() {
         let newValue;
         do {
             newValue = random(1, 9);
-            sud.set(x, y, newValue);
         } while (!Validator.validateField(sud, x, y, newValue));
+        sud.set(x, y, newValue);
     });
 
     return sud;

@@ -11,13 +11,13 @@ export class Validator {
         return true;
     }
 
-    static validateField(Sudocu, x, y) {
-        const { value, row } = Sudocu.getField(x, y);
-        return Validator.checkFieldIsUnique(value, row);
+    static validateField(Sudocu, x, y, value) {
+        const { row } = Sudocu.getFieldPos(x, y);
+        return Validator.checkFieldNotExists(value, row);
     }
 
     /**
-     * @param {Number[]} arr 
+     * @param {Number[]} arr
      */
     static validateArray(arr) {
         for (let i = 0; i < arr.length; i++) {
@@ -28,7 +28,10 @@ export class Validator {
     }
 
     static checkFieldIsUnique(value, arr) {
-        if (arr.indexOf(value) === arr.lastIndexOf(value)) return true;
-        return false;
+        return arr.indexOf(value) === arr.lastIndexOf(value);
+    }
+
+    static checkFieldNotExists(value, arr) {
+        return arr.indexOf(value) === -1;
     }
 }
