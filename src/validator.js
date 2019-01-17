@@ -1,6 +1,8 @@
 export class Validator {
     static validateSudocu(Sudocu) {
-        return Validator.validateRows(Sudocu);
+        if (!Validator.validateRows(Sudocu)) return false;
+        if (!Validator.validateColumns(Sudocu)) return false;
+        return true;
     }
 
     static validateRows(Sudocu) {
@@ -11,9 +13,19 @@ export class Validator {
         return true;
     }
 
+    static validateColumns(Sudocu) {
+        const cols = Sudocu.getColumns();
+        for (let i = 0; i < cols.length; i++) {
+            if (!Validator.validateArray(cols[i])) return false;
+        }
+        return true;
+    }
+
     static validateField(Sudocu, x, y, value) {
-        const [ row ] = Sudocu.getFieldPos(x, y);
-        return Validator.checkFieldNotExists(value, row);
+        const [ row, col ] = Sudocu.getFieldPos(x, y);
+        if (!Validator.checkFieldNotExists(value, row)) return false;
+        if (!Validator.checkFieldNotExists(value, col)) return false;
+        return true;
     }
 
     /**
