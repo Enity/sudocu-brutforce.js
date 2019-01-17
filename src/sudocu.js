@@ -34,6 +34,10 @@ export class Sudocu {
         }
     }
 
+    getRow(x, y) {
+        return this.map[y];
+    }
+
     getRows() {
         return this.map;
     }

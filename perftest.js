@@ -1,11 +1,16 @@
 const { performance } = require('perf_hooks');
-const { brut } = require('./src/index');
+const { brut } = require('./src/brutforce');
 
-const TRYES = 1000;
-const start = performance.now();
+function startPerf() {
+    const TRYES = 10000;
+    const start = performance.now();
 
-for (let i = 0; i < TRYES; i++) {
-    brut();
+    for (let i = 0; i < TRYES; i++) {
+        brut();
+    }
+
+    console.log(`finished ${TRYES} in ${performance.now() - start}`);
 }
 
-console.log(`finished ${TRYES} in ${performance.now() - start}`);
+startPerf();
+

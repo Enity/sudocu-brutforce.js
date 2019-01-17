@@ -3,6 +3,11 @@ export class Validator {
         return Validator.validateRows(Sudocu);
     }
 
+    static validateField(Sudocu, x, y) {
+        const row = Sudocu.getRow(x, y);
+        return Validator.validateArray(row);
+    }
+
     static validateRows(Sudocu) {
         const rows = Sudocu.getRows();
         for (let i = 0; i < rows.length; i++) {
