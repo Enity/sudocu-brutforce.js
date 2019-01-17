@@ -20,7 +20,7 @@ export class Sudocu {
     iterate(fn) {
         for (let y = 0; y < this.map.length; y++) {
             for (let x = 0; x < this.map[y].length; x++) {
-                fn(x, y, this.map[y][x]);
+                fn(x, y);
             }
         }
     }
@@ -34,8 +34,13 @@ export class Sudocu {
         }
     }
 
-    getRow(x, y) {
-        return this.map[y];
+    getField(x, y) {
+        return {
+            value: this.map[y][x],
+            row: this.map[y],
+            col: undefined, // TODO
+            square: undefined // TODO
+        };
     }
 
     getRows() {

@@ -5,10 +5,12 @@ import { random } from './random';
 export function brut() {
     const sud = new Sudocu();
 
-    sud.iterate((x, y, value) => {
+    sud.iterate((x, y) => {
+        let newValue;
         do {
-            sud.set(x, y, random(1, 9));
-        } while (!Validator.validateField(sud, x, y));
+            newValue = random(1, 9);
+            sud.set(x, y, newValue);
+        } while (!Validator.validateField(sud, x, y, newValue));
     });
 
     return sud;
