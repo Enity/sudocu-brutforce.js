@@ -10,6 +10,9 @@ describe('Sudocu class tests', () => {
         it('should return false if not unique exists', () => {
             equal(Validator.validateArray([1, 4, 3, 4, 5, 6, 7, 8, 9]), false);
         });
+        it('should return false if two digits', () => {
+            equal(Validator.validateArray([1, 2, 2, 0, 0, 0, 0, 0, 0]), false);
+        });
         it('should return true if all digits unique but not 0', () => {
             equal(Validator.validateArray([1, 2, 0, 4, 5, 0, 7, 0, 0]), true);
         });
