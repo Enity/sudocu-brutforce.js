@@ -6,13 +6,11 @@ export class Random {
     }
 
     getNew() {
-        if (this.cache.size === this.max) 
-            throw new Error('Reached max size of random cache. Clear cache before generate new value');
         let val;
 
         do {
-            val = this._generateRandom();
-        } while (this.cache.indexOf(val) !== -1);
+            val = Random.generateRandom(this.min, this.max);
+        } while (~this.cache.indexOf(val));
 
         this.cache.push(val);
         return val;
@@ -22,8 +20,8 @@ export class Random {
         this.cache = [];
     }
 
-    _generateRandom() {
-        var rand = this.min - 0.5 + Math.random() * (this.max - this.min + 1);
+    static generateRandom(min, max) {
+        var rand = min - 0.5 + Math.random() * (max - min + 1);
         rand = Math.round(rand);
         return rand;
     }
