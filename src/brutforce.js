@@ -1,15 +1,17 @@
 import { Sudocu } from './sudocu';
 import { Validator } from './validator';
-import { random } from './random';
+import { Random } from './random';
 
 export function brut() {
     const sud = new Sudocu();
+    const rand = new Random(1, 9);
 
     sud.iterate((x, y) => {
         let newValue;
         do {
-            newValue = random(1, 9);
+            newValue = rand.getNew();
         } while (!Validator.validateField(sud, x, y, newValue));
+        rand.clear();
         sud.set(x, y, newValue);
     });
 
