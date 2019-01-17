@@ -2,14 +2,29 @@ const { performance } = require('perf_hooks');
 const { brut } = require('./src/brutforce');
 
 function startPerf() {
-    const TRIES = 10000;
-    const start = performance.now();
+    const results = [ 1000, 10000, 100000 ].map(tries => {
+        return {
+            title: `Tries: ${tries}`,
+            body: round(tries, brut).toString(),
+        };
+    });
 
-    for (let i = 0; i < TRIES; i++) {
-        brut();
+    printTable(results);
+}
+
+function round(tries, fn) {
+    const start = performance.now();
+    for (let i = 0; i < tries; i++) {
+        fn();
     }
 
-    console.log(`finished ${TRIES} in ${performance.now() - start}`);
+    return performance.now() - start;
+}
+
+function printTable(results = []) {
+    results.forEach(row => {
+        console.log(`${row.title.padEnd(15)} |  ${row.body}`);
+    });
 }
 
 startPerf();
