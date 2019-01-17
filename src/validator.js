@@ -12,7 +12,7 @@ export class Validator {
     }
 
     static validateField(Sudocu, x, y, value) {
-        const { row } = Sudocu.getFieldPos(x, y);
+        const [ row ] = Sudocu.getFieldPos(x, y);
         return Validator.checkFieldNotExists(value, row);
     }
 
