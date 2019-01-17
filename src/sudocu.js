@@ -17,10 +17,10 @@ export class Sudocu {
         this.map[y][x] = value;
     }
 
-    iterate(fn) {
+    async iterate(fn) {
         for (let y = 0; y < this.map.length; y++) {
             for (let x = 0; x < this.map[y].length; x++) {
-                fn(x, y, this.map[y][x]);
+                await fn(x, y, this.map[y][x]);
             }
         }
     }

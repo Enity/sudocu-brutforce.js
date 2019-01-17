@@ -1,14 +1,30 @@
+const {
+    Worker,
+} = require('worker_threads');
+
 export class Validator {
-    static validateSudocu(Sudocu) {
+    static async validateSudocu(Sudocu) {
         return Validator.validateRows(Sudocu);
     }
 
-    static validateRows(Sudocu) {
+    static async validateRows(Sudocu) {
         const rows = Sudocu.getRows();
-        for (let i = 0; i < rows.length; i++) {
-            if (!Validator.validateArray(rows[i])) return false;
+        try {
+            const res = await Promise.all(
+                rows.map(r => new Promise((resolve, reject) => {
+                    const worker = new Worker('./validator_worker.js', {
+                        workerData: r
+                    });
+                    worker.on('message', resolve);
+                    worker.on('error', () => {
+                        worker.terminate();
+                        reject();
+                    });
+                })));
+            return true;
+        } catch (e) {
+            return false;
         }
-        return true;
     }
     /**
      * @param {Number[]} arr 

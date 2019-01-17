@@ -10,6 +10,7 @@
             "name": "Launch Program",
             "program": "${workspaceFolder}/src/index.js",
             "runtimeArgs": [
+                "--experimental-worker",
                 "-r", "esm"
             ]
         }

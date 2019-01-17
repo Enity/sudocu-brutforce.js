@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.js",
   "scripts": {
-    "start": "node -r esm src/index.js",
-    "perftest": "NODE_ENV=production node -r esm perftest.js",
+    "start": "node --experimental-worker -r esm src/index.js",
+    "perftest": "NODE_ENV=production node --experimental-worker -r esm perftest.js",
     "test": "mocha './tests/*.test.js' -r esm"
   },
   "keywords": [],
