@@ -6,6 +6,7 @@ export class Random {
     }
 
     getNew() {
+        if (this.cache.length === this.max) return false;
         let val;
 
         do {
