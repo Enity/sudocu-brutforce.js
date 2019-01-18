@@ -1,22 +1,27 @@
 import { Sudocu } from './sudocu';
 import { Validator } from './validator';
-import { random } from './random';
+import { Random } from './random';
 
 export function brut() {
     const sud = new Sudocu();
+    const random = new Random(1, 9);
+
     sud.iterate((x, y, backtrack) => {
         let newValue;
-        let count = 0;
+
         do {
-            newValue = random(1, 9);
-            count++;
-            if (count > 1000) {
+            newValue = random.getNew();
+            if (newValue !== false) {
+                newValue = random.getNew();
+            } else {
+                random.clear();
                 const [ newx, newy ] = backtrack();
                 x = newx;
                 y = newy;
-                count = 0;
             }
         } while (!Validator.validateField(sud, x, y, newValue));
+
+        random.clear();
         sud.set(x, y, newValue);
     });
 
