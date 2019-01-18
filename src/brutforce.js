@@ -11,10 +11,9 @@ export function brut() {
 
         do {
             newValue = random.getNew();
-            if (newValue !== false) {
-                newValue = random.getNew();
-            } else {
+            if (newValue === false) {
                 random.clear();
+                newValue = random.getNew();
                 const [ newx, newy ] = backtrack();
                 x = newx;
                 y = newy;
