@@ -2,7 +2,7 @@ const { performance } = require('perf_hooks');
 const { brut } = require('./src/brutforce');
 
 function startPerf() {
-    const results = [ 1, 10, 20 ].map(tries => {
+    const results = [ 1, 100, 1000 ].map(tries => {
         return {
             title: `Tries: ${tries}`,
             body: round(tries, brut).toString(),
