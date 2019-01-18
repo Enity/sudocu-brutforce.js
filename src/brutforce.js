@@ -6,7 +6,7 @@ export function brut() {
     const sud = new Sudocu();
     const random = new Random(1, 9);
 
-    sud.iterate((x, y, backtrack) => {
+    sud.iterate((pos, backtrack) => {
         let newValue;
 
         do {
@@ -14,14 +14,12 @@ export function brut() {
             if (newValue === false) {
                 random.clear();
                 newValue = random.getNew();
-                const [ newx, newy ] = backtrack();
-                x = newx;
-                y = newy;
+                pos = backtrack();
             }
-        } while (!Validator.validateField(sud, x, y, newValue));
+        } while (!Validator.validateField(sud, pos, newValue));
 
         random.clear();
-        sud.set(x, y, newValue);
+        sud.set(pos, newValue);
     });
 
     return sud;

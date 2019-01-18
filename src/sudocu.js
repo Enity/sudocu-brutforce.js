@@ -1,82 +1,86 @@
 export class Sudocu {
     constructor() {
-        this.map = [
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-            [0,0,0,0,0,0,0,0,0],
-        ];
+        this.map = Array(91).fill(0);
+        this.sideLength = 9;
     }
 
-    set(x, y, value) {
-        this.map[y][x] = value;
+    set(i, value) {
+        this.map[i] = value;
     }
 
-    backtrack(x, y) {
-        for (let ystart = y; ystart > Math.abs(y - 1); ystart--) {
-            for (let xstart = 0; xstart < 9; xstart++) {
-                this.set(xstart, ystart, 0);
-            }
+    backtrack(i) {
+        let newPos = i - 18;
+        if (newPos < 0) newPos = 0;
+        for (let b = newPos; b < i; b++) {
+            this.set(b, 0);
         }
-        return [
-            0, // x
-            Math.abs(y - 1) // y
-        ];
+        return newPos;
     }
 
     iterate(fn) {
-        for (let y = 0; y < this.map.length; y++) {
-            for (let x = 0; x < this.map[y].length; x++) {
-                fn(x, y, () => {
-                    const [newx, newy] = this.backtrack(x, y);
-                    x = newx;
-                    y = newy;
-                    return [newx, newy];
-                });
-            }
+        for (let i = 0; i < this.map.length; i++) {
+            fn(i, () => {
+                let newPos = this.backtrack(i);
+                i = newPos;
+                return newPos;
+            });
+            
         }
     }
 
     print() {
-        for (let y = 0; y < this.map.length; y++) {
-            for (let x = 0; x < this.map[y].length; x++) {
-                process.stdout.write(`${this.map[y][x]} `);
+        const rows = this.getRows();
+
+        for (let y = 0; y < rows.length; y++) {
+            for (let x = 0; x < rows[y].length; x++) {
+                process.stdout.write(`${rows[y][x]} `);
             }
             process.stdout.write('\n');
         }
     }
 
-    getFieldPos(x, y) {
-        const col = new Array(this.map.length);
-        for (let i = 0; i < this.map.length; i++) {
-            col[i] = this.map[i][x];
+    getFieldPos(i) {
+        const col = new Array(this.sideLength);
+        let pos = i % this.sideLength;
+        for (let b = 0; b < this.sideLength; b++) {
+            col[b] = this.map[pos];
+            pos += this.sideLength;
         }
+        const xpos = Math.floor(i / this.sideLength) * this.sideLength;
         return [
-            this.map[y], // row
-            col, // TODO col
+            this.map.slice(xpos, xpos + this.sideLength), // row
+            col, // col
             undefined // TODO square
         ];
     }
 
     getRows() {
-        return this.map;
+        const rows = new Array(this.sideLength);
+
+        let pos = 0;
+        for (let i = 0; i < this.sideLength; i++) {
+            rows[i] = this.map.slice(pos, pos + this.sideLength);
+            pos += this.sideLength;
+        }
+        return rows;
     }
 
     getColumns() {
-        const sideLength = this.map.length;
-        const cols = Array.from({ length: sideLength }, () => new Array(sideLength));
+        const cols = Array.from({ length: this.sideLength }, () => new Array(this.sideLength));
         
-        for (let y = 0; y < sideLength; y++) {
-            for (let x = 0; x < sideLength; x++) {
-                cols[x][y] = this.map[y][x];
-            }
+        let x = 0;
+        for (let i = 0; i < this.map.length; i++) {
+            if (x === this.sideLength) x = 0;
+            cols[i % this.sideLength][x] = this.map[i];
+            x++;
         }
 
         return cols;
+    }
+
+    _calculateIndexesMap() {
+        this.iterate((x, y) => {
+            
+        });
     }
 }

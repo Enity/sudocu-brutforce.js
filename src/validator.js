@@ -21,8 +21,8 @@ export class Validator {
         return true;
     }
 
-    static validateField(Sudocu, x, y, value) {
-        const [ row, col ] = Sudocu.getFieldPos(x, y);
+    static validateField(Sudocu, i, value) {
+        const [ row, col ] = Sudocu.getFieldPos(i);
         if (!Validator.checkFieldNotExists(value, row)) return false;
         if (!Validator.checkFieldNotExists(value, col)) return false;
         return true;
