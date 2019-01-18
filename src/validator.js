@@ -44,6 +44,9 @@ export class Validator {
     }
 
     static checkFieldNotExists(value, arr) {
-        return arr.indexOf(value) === -1;
+        for (let i = 0; i < arr.length; i++) {
+            if (arr[i] === value) return false;
+        }
+        return true;
     }
 }
