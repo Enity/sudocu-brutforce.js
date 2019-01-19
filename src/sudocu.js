@@ -70,9 +70,8 @@ export class Sudocu {
         
         let x = 0;
         for (let i = 0; i < this.map.length; i++) {
-            if (x === this.sideLength) x = 0;
+            if (i !== 0 && i % this.sideLength === 0) x++;
             cols[i % this.sideLength][x] = this.map[i];
-            x++;
         }
 
         return cols;
