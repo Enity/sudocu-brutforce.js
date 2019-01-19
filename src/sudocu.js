@@ -25,18 +25,6 @@ export class Sudocu {
                 i = newPos;
                 return newPos;
             });
-            
-        }
-    }
-
-    print() {
-        const rows = this.getRows();
-
-        for (let y = 0; y < rows.length; y++) {
-            for (let x = 0; x < rows[y].length; x++) {
-                process.stdout.write(`${rows[y][x]} `);
-            }
-            process.stdout.write('\n');
         }
     }
 
@@ -45,29 +33,6 @@ export class Sudocu {
             this._indexesMap[i][0], // row indexes
             this._indexesMap[i][1] // col indexes
         ];
-    }
-
-    getRows() {
-        const rows = new Array(this.sideLength);
-
-        let pos = 0;
-        for (let i = 0; i < this.sideLength; i++) {
-            rows[i] = this.map.slice(pos, pos + this.sideLength);
-            pos += this.sideLength;
-        }
-        return rows;
-    }
-
-    getColumns() {
-        const cols = Array.from({ length: this.sideLength }, () => new Array(this.sideLength));
-        
-        let x = 0;
-        for (let i = 0; i < this.map.length; i++) {
-            if (i !== 0 && i % this.sideLength === 0) x++;
-            cols[i % this.sideLength][x] = this.map[i];
-        }
-
-        return cols;
     }
 
     _calculateIndexesMap() {
@@ -92,12 +57,48 @@ export class Sudocu {
                 startPos += this.sideLength;
             }
 
-            map[i] = [
-                row,
-                column,
-            ];
+            map[i] = [row, column];
         }
-       
+
         return map;
+    }
+
+    print() {
+        const rows = this.getRows();
+
+        for (let y = 0; y < rows.length; y++) {
+            for (let x = 0; x < rows[y].length; x++) {
+                process.stdout.write(`${rows[y][x]} `);
+            }
+            process.stdout.write('\n');
+        }
+    }
+
+    // FOR FULL VALIDATION
+    getRows() {
+        const rows = new Array(this.sideLength);
+
+        let pos = 0;
+        for (let i = 0; i < this.sideLength; i++) {
+            rows[i] = this.map.slice(pos, pos + this.sideLength);
+            pos += this.sideLength;
+        }
+        return rows;
+    }
+
+    // FOR FULL VALIDATION
+    getColumns() {
+        const cols = Array.from(
+            { length: this.sideLength },
+            () => new Array(this.sideLength)
+        );
+
+        let x = 0;
+        for (let i = 0; i < this.map.length; i++) {
+            if (i !== 0 && i % this.sideLength === 0) x++;
+            cols[i % this.sideLength][x] = this.map[i];
+        }
+
+        return cols;
     }
 }
