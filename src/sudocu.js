@@ -2,6 +2,7 @@ export class Sudocu {
     constructor() {
         this.map = Array(81).fill(0);
         this.sideLength = 9;
+        this._indexesMap = this._calculateIndexesMap();
     }
 
     set(i, value) {
@@ -39,18 +40,26 @@ export class Sudocu {
         }
     }
 
-    getFieldPos(i) {
+    getFieldPos(i) { // DEPRECATED
         const col = new Array(this.sideLength);
-        let pos = i % this.sideLength;
+        const row = new Array(this.sideLength);
         for (let b = 0; b < this.sideLength; b++) {
-            col[b] = this.map[pos];
-            pos += this.sideLength;
+            row[b] = this.map[this._indexesMap[i][0][b]];
         }
-        const xpos = Math.floor(i / this.sideLength) * this.sideLength;
+        for (let b = 0; b < this.sideLength; b++) {
+            col[b] = this.map[this._indexesMap[i][1][b]];
+        }
         return [
-            this.map.slice(xpos, xpos + this.sideLength), // row
+            row, // row
             col, // col
             undefined // TODO square
+        ];
+    }
+
+    getFieldIndexes(i) {
+        return [
+            this._indexesMap[i][0], // row indexes
+            this._indexesMap[i][1] // col indexes
         ];
     }
 
@@ -78,8 +87,33 @@ export class Sudocu {
     }
 
     _calculateIndexesMap() {
-        this.iterate((x, y) => {
-            
-        });
+        const map = {};
+
+        for (let i = 0; i < this.map.length; i++) {
+            // calculate row indexes
+            const row = new Array(this.sideLength);
+            const column = new Array(this.sideLength);
+            let startPos;
+
+            startPos = Math.floor(i / this.sideLength) * this.sideLength;
+            for (let b = 0; b < this.sideLength; b++) {
+                row[b] = startPos;
+                startPos++;
+            }
+
+            // calculcate column indexes
+            startPos = i % this.sideLength;
+            for (let b = 0; b < this.sideLength; b++) {
+                column[b] = startPos;
+                startPos += this.sideLength;
+            }
+
+            map[i] = [
+                row,
+                column,
+            ];
+        }
+       
+        return map;
     }
 }
