@@ -1,6 +1,6 @@
 export class Sudocu {
     constructor() {
-        this.map = Array(91).fill(0);
+        this.map = Array(81).fill(0);
         this.sideLength = 9;
     }
 
@@ -9,7 +9,7 @@ export class Sudocu {
     }
 
     backtrack(i) {
-        let newPos = i - 18;
+        let newPos = i - 15;
         if (newPos < 0) newPos = 0;
         for (let b = newPos; b < i; b++) {
             this.set(b, 0);
