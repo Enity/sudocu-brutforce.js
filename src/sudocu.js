@@ -9,7 +9,7 @@ export class Sudocu {
     }
 
     backtrack(i) {
-        let newPos = i - 15;
+        let newPos = i - 8;
         if (newPos < 0) newPos = 0;
         for (let b = newPos; b < i; b++) {
             this.set(b, 0);
