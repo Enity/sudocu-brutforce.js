@@ -16,7 +16,7 @@ export function brut() {
                 newValue = random.getNew();
                 pos = backtrack();
             }
-        } while (!Validator.validateFieldByIndexes(sud, pos, newValue));
+        } while (!Validator.validateField(sud, pos, newValue));
 
         random.clear();
         sud.set(pos, newValue);

@@ -40,22 +40,6 @@ export class Sudocu {
         }
     }
 
-    getFieldPos(i) { // DEPRECATED
-        const col = new Array(this.sideLength);
-        const row = new Array(this.sideLength);
-        for (let b = 0; b < this.sideLength; b++) {
-            row[b] = this.map[this._indexesMap[i][0][b]];
-        }
-        for (let b = 0; b < this.sideLength; b++) {
-            col[b] = this.map[this._indexesMap[i][1][b]];
-        }
-        return [
-            row, // row
-            col, // col
-            undefined // TODO square
-        ];
-    }
-
     getFieldIndexes(i) {
         return [
             this._indexesMap[i][0], // row indexes
