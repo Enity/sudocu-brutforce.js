@@ -2,23 +2,27 @@ export class Random {
     constructor(min, max) {
         this.min = min;
         this.max = max;
-        this.cache = [];
+        this._i = 0;
+        this._range = max - min + 1;
+        this._cache = new Array(this._range);
     }
 
     getNew() {
-        if (this.cache.length === this.max) return false;
+        if (this._i === this._range) return false;
         let val;
 
         do {
             val = Random.generateRandom(this.min, this.max);
-        } while (~this.cache.indexOf(val));
+        } while (~this._cache.indexOf(val));
 
-        this.cache.push(val);
+        this._cache[this._i] = val;
+        this._i++;
         return val;
     }
 
     clear() {
-        this.cache = [];
+        this._cache = [];
+        this._i = 0;
     }
 
     static generateRandom(min, max) {
