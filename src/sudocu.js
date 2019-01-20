@@ -39,11 +39,12 @@ export class Sudocu {
         const map = {};
 
         for (let i = 0; i < this.map.length; i++) {
-            // calculate row indexes
             const row = new Array(this.sideLength);
             const column = new Array(this.sideLength);
+            const square = new Array(this.sideLength);
             let startPos;
 
+            // calculate row indexes
             startPos = Math.floor(i / this.sideLength) * this.sideLength;
             for (let b = 0; b < this.sideLength; b++) {
                 row[b] = startPos;
@@ -57,7 +58,14 @@ export class Sudocu {
                 startPos += this.sideLength;
             }
 
-            map[i] = [row, column];
+            // calculate square indexes
+            startPos = i % this.sideLength;
+            for (let b = 0; b < this.sideLength; b++) {
+                column[b] = startPos;
+                startPos += this.sideLength;
+            }
+
+            map[i] = [row, column, square];
         }
 
         return map;
@@ -100,5 +108,24 @@ export class Sudocu {
         }
 
         return cols;
+    }
+    
+    // FOR FULL VALIDATION
+    getSquares() {
+        const sq = Array.from(
+            { length: this.sideLength },
+            () => new Array(this.sideLength)
+        );
+        let pos = 0;
+        for (let i = 0; i < this.sideLength; i++) {
+            sq[i] = this.map.slice(pos, pos + 3)
+                .concat(this.map.slice(pos + this.sideLength, pos + this.sideLength + 3))
+                .concat(this.map.slice(pos + this.sideLength * 2, pos + this.sideLength * 2 + 3));
+
+            pos += 3;
+            if (pos % this.sideLength === 0) pos += this.sideLength * 2;
+        }
+
+        return sq;
     }
 }

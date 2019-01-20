@@ -2,6 +2,7 @@ export class Validator {
     static validateSudocu(Sudocu) {
         if (!Validator.validateRows(Sudocu)) return false;
         if (!Validator.validateColumns(Sudocu)) return false;
+        if (!Validator.validateSquares(Sudocu)) return false;
         return true;
     }
 
@@ -17,6 +18,14 @@ export class Validator {
         const cols = Sudocu.getColumns();
         for (let i = 0; i < cols.length; i++) {
             if (!Validator.validateArray(cols[i])) return false;
+        }
+        return true;
+    }
+
+    static validateSquares(Sudocu) {
+        const squares = Sudocu.getSquares();
+        for (let i = 0; i < squares.length; i++) {
+            if (!Validator.validateArray(squares[i])) return false;
         }
         return true;
     }
