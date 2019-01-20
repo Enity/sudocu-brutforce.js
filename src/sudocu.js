@@ -31,7 +31,8 @@ export class Sudocu {
     getFieldIndexes(i) {
         return [
             this._indexesMap[i][0], // row indexes
-            this._indexesMap[i][1] // col indexes
+            this._indexesMap[i][1], // col indexes
+            this._indexesMap[i][2] // square indexes
         ];
     }
 
@@ -59,10 +60,18 @@ export class Sudocu {
             }
 
             // calculate square indexes
-            startPos = i % this.sideLength;
+            const x = i % this.sideLength;
+            const y = Math.floor(i / this.sideLength);
+            const squareSide = Math.sqrt(this.sideLength);
+
+            const xStartpos = Math.floor(x / squareSide) * squareSide;
+            const YStartpos = Math.floor(y / squareSide) * squareSide;
+            
+            startPos = xStartpos + this.sideLength * YStartpos;
             for (let b = 0; b < this.sideLength; b++) {
-                column[b] = startPos;
-                startPos += this.sideLength;
+                square[b] = startPos;
+                startPos++;
+                if (startPos % squareSide === 0) startPos += squareSide * 2;
             }
 
             map[i] = [row, column, square];
@@ -109,7 +118,7 @@ export class Sudocu {
 
         return cols;
     }
-    
+
     // FOR FULL VALIDATION
     getSquares() {
         const sq = Array.from(

@@ -31,9 +31,10 @@ export class Validator {
     }
 
     static validateField(Sudocu, i, value) {
-        const [ rowInd, colInd ] = Sudocu.getFieldIndexes(i);
+        const [ rowInd, colInd, squareInd ] = Sudocu.getFieldIndexes(i);
         if (!Validator.checkFieldNotExists(value, rowInd, Sudocu.map)) return false;
         if (!Validator.checkFieldNotExists(value, colInd, Sudocu.map)) return false;
+        if (!Validator.checkFieldNotExists(value, squareInd, Sudocu.map)) return false;
         return true;
     }
 
