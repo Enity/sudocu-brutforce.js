@@ -44,13 +44,9 @@ export class Validator {
     static validateArray(arr) {
         for (let i = 0; i < arr.length; i++) {
             if (arr[i] === 0) continue;
-            if (!Validator.checkFieldIsUnique(arr[i], arr)) return false;
+            if (arr.indexOf(arr[i]) !== arr.lastIndexOf(arr[i])) return false;
         }
         return true;
-    }
-
-    static checkFieldIsUnique(value, arr) {
-        return arr.indexOf(value) === arr.lastIndexOf(value);
     }
 
     static checkFieldNotExists(value, indexesArr, arr) {
