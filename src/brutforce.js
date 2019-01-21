@@ -1,12 +1,10 @@
-import { Sudocu } from './sudocu';
 import { Validator } from './validator';
 import { Random } from './random';
 
-export function brut() {
-    const sud = new Sudocu();
+export function brut(sudocu) {
     const random = new Random(1, 9);
 
-    sud.iterate((pos, backtrack) => {
+    sudocu.iterate((pos, backtrack) => {
         let newValue;
 
         do {
@@ -16,11 +14,11 @@ export function brut() {
                 newValue = random.getNew();
                 pos = backtrack();
             }
-        } while (!Validator.validateField(sud, pos, newValue));
+        } while (!Validator.validateField(sudocu, pos, newValue));
 
         random.clear();
-        sud.set(pos, newValue);
+        sudocu.set(pos, newValue);
     });
 
-    return sud;
+    return true;
 }

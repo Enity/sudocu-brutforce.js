@@ -1,9 +1,12 @@
+import { Sudocu } from './sudocu';
 import { brut } from './brutforce';
 
 function main() {
-    const s = brut();
+    const sud = new Sudocu();
 
-    s.print();
+    brut(sud);
+
+    sud.print();
 }
 
 main();
