@@ -3,6 +3,8 @@ export class Sudocu {
         this.map = Array(81).fill(0);
         this.sideLength = 9;
         this._indexesMap = this._calculateIndexesMap();
+        this._backtrackStep = 5;
+        this._lastBacktrackIndex = null;
     }
 
     set(i, value) {
@@ -10,11 +12,15 @@ export class Sudocu {
     }
 
     backtrack(i) {
-        let newPos = i - 8;
+        if (i === this._lastBacktrackIndex) this._backtrackStep++;
+        let newPos = i - this._backtrackStep;
         if (newPos < 0) newPos = 0;
+
         for (let b = newPos; b < i; b++) {
             this.set(b, 0);
         }
+
+        this._lastBacktrackIndex = i;
         return newPos;
     }
 
